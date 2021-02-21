@@ -1,3 +1,11 @@
+Seal Launcher
+================
+O Seal Launcher é um fork do SKCraft Launcher feito para ser utilizado na [Seal Island](https://sealisland.com.br).
+
+As modificações efetuadas foram para deixar o Launcher mais bonito visualmente.
+
+## Descrição do SKCraft Launcher:
+
 ### 1.13+ notice
 
 The launcher now supports modern Forge distributions (1.13+), plus Fabric!
