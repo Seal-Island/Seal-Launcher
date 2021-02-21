@@ -8,6 +8,7 @@ package com.skcraft.launcher;
 
 import com.google.common.base.Supplier;
 import com.skcraft.launcher.swing.SwingHelper;
+import lombok.SneakyThrows;
 import lombok.extern.java.Log;
 
 import javax.swing.*;
@@ -56,6 +57,7 @@ public class FancyLauncher {
             this.launcher = launcher;
         }
 
+        @SneakyThrows
         @Override
         public Window get() {
             return new FancyLauncherFrame(launcher);

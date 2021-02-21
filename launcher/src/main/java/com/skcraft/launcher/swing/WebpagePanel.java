@@ -119,7 +119,7 @@ public final class WebpagePanel extends JPanel {
 
         documentScroll = new JScrollPane(documentView);
         documentScroll.setOpaque(false);
-        panel.add(documentScroll, new Integer(1));
+        //panel.add(documentScroll, new Integer(1));
         documentScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         synchronized (this) {
             if (browserBorder != null) {

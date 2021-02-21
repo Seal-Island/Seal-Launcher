@@ -21,6 +21,7 @@ import lombok.NonNull;
 import lombok.extern.java.Log;
 import net.miginfocom.swing.MigLayout;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
@@ -31,6 +32,7 @@ import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
+import java.io.IOException;
 import java.lang.ref.WeakReference;
 
 import static com.skcraft.launcher.util.SharedLocale.tr;
@@ -50,10 +52,12 @@ public class LauncherFrame extends JFrame {
     private final JScrollPane instanceScroll = new JScrollPane(instancesTable);
     private WebpagePanel webView;
     private JSplitPane splitPane;
-    private final JButton launchButton = new JButton(SharedLocale.tr("launcher.launch"));
-    private final JButton refreshButton = new JButton(SharedLocale.tr("launcher.checkForUpdates"));
-    private final JButton optionsButton = new JButton(SharedLocale.tr("launcher.options"));
-    private final JButton selfUpdateButton = new JButton(SharedLocale.tr("launcher.updateLauncher"));
+    private final JButton launchButton = new CustomImageButton(ImageIO.read(Launcher.class.getResourceAsStream("play.png")), 96, 39);
+    private final JButton refreshButton = new CustomImageButton(ImageIO.read(Launcher.class.getResourceAsStream("refresh.png")), 39, 39);
+    private final JButton discord = new CustomImageButton(ImageIO.read(Launcher.class.getResourceAsStream("discord.png")), 42, 31);
+    private final JButton loja = new CustomImageButton(ImageIO.read(Launcher.class.getResourceAsStream("shop.png")), 36, 31);
+    private final JButton optionsButton = new CustomImageButton(ImageIO.read(Launcher.class.getResourceAsStream("config.png")), 165, 39);
+    private final JButton selfUpdateButton = new CustomImageButton(ImageIO.read(Launcher.class.getResourceAsStream("update.png")), 220, 39);
     private final JCheckBox updateCheck = new JCheckBox(SharedLocale.tr("launcher.downloadUpdates"));
 
     /**
@@ -61,14 +65,15 @@ public class LauncherFrame extends JFrame {
      *
      * @param launcher the launcher
      */
-    public LauncherFrame(@NonNull Launcher launcher) {
+    public LauncherFrame(@NonNull Launcher launcher) throws IOException {
         super(tr("launcher.title", launcher.getVersion()));
 
         this.launcher = launcher;
         instancesModel = new InstanceTableModel(launcher.getInstances());
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new Dimension(400, 300));
+        setMinimumSize(new Dimension(1194, 718));
+        setResizable(false);
         initComponents();
         pack();
         setLocationRelativeTo(null);
@@ -85,11 +90,12 @@ public class LauncherFrame extends JFrame {
 
     private void initComponents() {
         JPanel container = createContainerPanel();
-        container.setLayout(new MigLayout("fill, insets dialog", "[][]push[][]", "[grow][]"));
+        container.setLayout(new MigLayout("fill, insets dialog", "[][][]push[][]", "[grow][]"));
 
         webView = createNewsPanel();
         splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, instanceScroll, webView);
         selfUpdateButton.setVisible(launcher.getUpdateManager().getPendingUpdate());
+        updateCheck.setVisible(false);
 
         launcher.getUpdateManager().addPropertyChangeListener(new PropertyChangeListener() {
             @Override
@@ -105,17 +111,22 @@ public class LauncherFrame extends JFrame {
         instancesTable.setModel(instancesModel);
         launchButton.setFont(launchButton.getFont().deriveFont(Font.BOLD));
         splitPane.setDividerLocation(200);
-        splitPane.setDividerSize(4);
+        splitPane.setDividerSize(0);
         splitPane.setOpaque(false);
         container.add(splitPane, "grow, wrap, span 5, gapbottom unrel, w null:680, h null:350");
         SwingHelper.flattenJSplitPane(splitPane);
         container.add(refreshButton);
-        container.add(updateCheck);
+        container.add(discord);
+        container.add(loja);
         container.add(selfUpdateButton);
+        container.add(updateCheck);
         container.add(optionsButton);
         container.add(launchButton);
 
         add(container, BorderLayout.CENTER);
+
+        discord.addActionListener(ActionListeners.openURL(this, launcher.getConfig().getDiscordUrl()));
+        loja.addActionListener(ActionListeners.openURL(this, launcher.getConfig().getShopUrl()));
 
         instancesModel.addTableModelListener(new TableModelListener() {
             @Override

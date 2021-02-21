@@ -8,6 +8,7 @@ package com.skcraft.launcher;
 
 import com.google.common.base.Supplier;
 import com.skcraft.launcher.dialog.LauncherFrame;
+import lombok.SneakyThrows;
 
 import java.awt.*;
 
@@ -19,6 +20,7 @@ public class DefaultLauncherSupplier implements Supplier<Window> {
         this.launcher = launcher;
     }
 
+    @SneakyThrows
     @Override
     public Window get() {
         return new LauncherFrame(launcher);

@@ -12,6 +12,7 @@ import com.skcraft.launcher.swing.WebpagePanel;
 import lombok.NonNull;
 
 import javax.swing.*;
+import java.io.IOException;
 
 public class FancyLauncherFrame extends LauncherFrame {
 
@@ -20,7 +21,7 @@ public class FancyLauncherFrame extends LauncherFrame {
      *
      * @param launcher the launcher
      */
-    public FancyLauncherFrame(@NonNull Launcher launcher) {
+    public FancyLauncherFrame(@NonNull Launcher launcher) throws IOException {
         super(launcher);
 
         setSize(800, 500);

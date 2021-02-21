@@ -14,12 +14,26 @@ import java.io.IOException;
 public class FancyBackgroundPanel extends JPanel {
 
     private Image background;
+    private Image borders;
+    private Image logo;
 
     public FancyBackgroundPanel() {
         try {
-            background = ImageIO.read(FancyBackgroundPanel.class.getResourceAsStream("launcher_bg.jpg"));
+            background = ImageIO.read(FancyBackgroundPanel.class.getResourceAsStream("launcher_bg.png"));
         } catch (IOException e) {
             background = null;
+        }
+
+        try {
+            borders = ImageIO.read(FancyBackgroundPanel.class.getResourceAsStream("borders.png"));
+        } catch (IOException e) {
+            borders = null;
+        }
+
+        try {
+            logo = ImageIO.read(FancyBackgroundPanel.class.getResourceAsStream("logo.png"));
+        } catch (IOException e) {
+            logo = null;
         }
     }
 
@@ -28,6 +42,14 @@ public class FancyBackgroundPanel extends JPanel {
         super.paintComponent(g);
         if (background != null) {
             g.drawImage(background, 0, 0, null);
+        }
+
+        if(borders != null){
+            g.drawImage(borders, 0, 0, null);
+        }
+
+        if(logo != null) {
+            g.drawImage(logo, 460, 100, 450, 365, null);
         }
     }
 

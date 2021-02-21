@@ -38,6 +38,8 @@ public class Configuration {
     private boolean serverEnabled = false;
     private String serverHost;
     private int serverPort = 25565;
+    private String discordUrl = "https://discord.sealisland.com.br";
+    private String shopUrl = "https://shop.sealisland.com.br";
 
     @Override
     public boolean equals(Object o) {
