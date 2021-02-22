@@ -16,7 +16,7 @@ import java.awt.event.KeyEvent;
 public class AboutDialog extends JDialog {
 
     public AboutDialog(Window parent) {
-        super(parent, "About", ModalityType.DOCUMENT_MODAL);
+        super(parent, "Sobre", ModalityType.DOCUMENT_MODAL);
 
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         initComponents();
@@ -29,16 +29,19 @@ public class AboutDialog extends JDialog {
         JPanel container = new JPanel();
         container.setLayout(new MigLayout("insets dialog"));
 
-        container.add(new JLabel("<html>Licensed under GNU General Public License, version 3."), "wrap, gapbottom unrel");
-        container.add(new JLabel("<html>You are using SKCraft Launcher, an open-source customizable<br>" +
-                "launcher platform that anyone can use."), "wrap, gapbottom unrel");
-        container.add(new JLabel("<html>SKCraft does not necessarily endorse the version of<br>" +
-                "the launcher that you are using."), "wrap, gapbottom unrel");
+        container.add(new JLabel("<html>Licenciado sob a GNU General Public License, vers\u00E3o 3."), "wrap, gapbottom unrel");
+        container.add(new JLabel("<html>Voc\u00EA est\u00E1 usando o SKCraft Launcher, uma plataforma de launcher<br>" +
+                "open-source e customiz\u00E1vel que qualquer um pode usar."), "wrap, gapbottom unrel");
+        container.add(new JLabel("<html>SKCraft n\u00E3o necessariamente reflete a vers\u00E3o do<br>" +
+                "launcher que voc\u00EA est\u00E1 usando.<br>"), "wrap, gapbottom unrel");
+        container.add(new JLabel("<html>Esse Launcher foi modificado por <strong>Focamacho</strong> para uso na <strong>Seal Island</strong>."), "wrap, gapbottom unrel");
 
         JButton okButton = new JButton("OK");
-        JButton sourceCodeButton = new JButton("Website");
+        JButton sourceCodeButton = new JButton("SKCraft");
+        JButton sealSourceCodeButton = new JButton("Seal Launcher");
 
         container.add(sourceCodeButton, "span, split 3, sizegroup bttn");
+        container.add(sealSourceCodeButton, "span, split 3, sizegroup bttn");
         container.add(okButton, "tag ok, sizegroup bttn");
 
         add(container, BorderLayout.CENTER);
@@ -48,6 +51,7 @@ public class AboutDialog extends JDialog {
 
         okButton.addActionListener(ActionListeners.dispose(this));
         sourceCodeButton.addActionListener(ActionListeners.openURL(this, "https://github.com/SKCraft/Launcher"));
+        sealSourceCodeButton.addActionListener(ActionListeners.openURL(this, "https://github.com/Seal-Island/Seal-Launcher"));
     }
 
     public static void showAboutDialog(Window parent) {
